@@ -26,9 +26,7 @@ public class User {
     public String AfficherUser(){
         
     }
-    public String EnvoyerMessage(){
-        
-    }
+   
     public void AjouterInfos(){
         
     }
