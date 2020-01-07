@@ -16,20 +16,8 @@ public class User {
     String Prenom;
     String Langage;
     
-    public User(){
-        
-    }
-    
-    public void Create(){
-        
-    }
-    public String AfficherUser(){
-        
-    }
    
-    public void AjouterInfos(){
-        
-    }
+
     public String getPhoto(){
         return Photo;
     }
@@ -37,7 +25,13 @@ public class User {
         
     }
     
-    
+      
+    public String getMdp(){
+        return Mdp;
+    }
+    public void setMdp(String mdp){
+        Mdp = mdp;
+    }
     public String getEmail(){
         return Email;
     }
