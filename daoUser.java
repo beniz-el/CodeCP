@@ -5,6 +5,7 @@
  */
 package codecp;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,54 +19,95 @@ public class daoUser extends dao<User> {
         db = new Database();
     }
     
-    public boolean create(User u){
-        String insertQuery = "INSERT INTO User VALUES("
-                + "'" + u.getIdUser() + "',"
-                + "'" + u.getUsername() + "',"
-                + "'" + u.getMdp() + "',"
-                + "'','','','','','');";        
-        
-        return (db.dmlQuery(insertQuery) == 0) ? false : true;
+    public void create(User u){
+        try {
+            PreparedStatement Pst;
+            Pst = db.con.prepareStatement( "INSERT INTO User VALUES(?,?)");
+            Pst.setInt(1, u.getIdUser());
+            Pst.setString(2, u.getUsername());
+            Pst.setString(3, u.getMdp());
+            if(Pst.executeUpdate()!=0){
+                System.out.println("Ajout effectuee");
+            }
+            else{
+                System.out.println("PB dans INSERT");
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //ajouter ou modifier infos
-    public boolean update(User u){
-        String updateQuery = "UPDATE User set"
-                             + "Nom ='"+u.getNom()+"',"
-                             + "Prenom ='"+u.getPrenom()+"',"
-                             + "Mdp='"+u.getMdp()+"',"
-                             + "Tel='"+u.getTel()+"',"
-                             + "Email='"+u.getEmail()+"'"
-                             +"WHERE Id_User='"+u.getIdUser()+"';";
-        
-        return (db.dmlQuery(updateQuery) == 0)? false : true;
+    public void update(User u){
+        try {
+            PreparedStatement Pst;
+            Pst = db.con.prepareStatement("UPDATE User set Nom =?, Prenom =? ,Mdp=?, Tel=?, Email=? WHERE Id_User=?");
+            Pst.setString(1, u.getNom());
+            Pst.setString(2, u.getPrenom());
+            Pst.setString(3, u.getMdp());
+            Pst.setString(4, u.getTel());
+            Pst.setString(5, u.getEmail());
+            if(Pst.executeUpdate()!=0){
+                System.out.println("Mise a jour effectuee");
+            }
+            else{
+                System.out.println("user nexiste pas");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   
+       
                            
     }
     
     //supprimer
-    public boolean delete(User u){
-        String deleteQuery = "DELETE FROM User"
-                             +"WHERE Id_User=" + u.getIdUser() +";";
+    public void delete(User u){
+        String sql = "DELETE FROM User WHERE Id_User=?";
+        try {
+            PreparedStatement stmt = db.con.prepareStatement(sql);
+            stmt.setInt(1, u.getIdUser());
+            stmt.executeUpdate();
+            System.out.println("supprimee");
+        } catch (SQLException ex) {
+            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        return (db.dmlQuery(deleteQuery) == 0) ? false : true;
+        
     }
     
     //lister
-    public void all(){
-       
-            String req;
-            req = "select * from users";
-            Statement St;
-             try {
-                 St=MyCon.createStatement();
-                 ResultSet Rs= St.executeQuery(req);
-            while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Password"));
-            }
+    public Vector<User> all(){
         
-        } catch (SQLException ex) {
-            System.out.println("PB dans la requete select");
+            Vector<User> users = new Vector<User>();
+            
+            String findAllQuery = "SELECT *FROM User;";
+            ResultSet rs = db.query(findAllQuery);
+            try {
+                
+            while(rs.next()){
+                User u = new User();
+                
+                u.setUsername(rs.getString("Username"));
+                u.setNom(rs.getString("Nom"));
+                u.setPrenom(rs.getString("Prenom"));
+                u.setEmail(rs.getString("Email"));
+                u.setLangage(rs.getString("Langage"));
+                u.setTel(rs.getString("Tel"));
+                
+                users.add(u);
+                
+            }
+            
+            } catch (SQLException ex) {
+            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
         }
+            return users;
           
+    }
+
+    @Override
+    public User find(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
