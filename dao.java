@@ -17,12 +17,12 @@ public abstract class dao<T> {
    
    public abstract T find(String id); //Rechercher
    
-   public abstract void all(); //recuperer tout
+   public abstract Vector<User> all(); //recuperer tout
    
-   public abstract boolean create(T obj);
+   public abstract void create(T obj);
    
-   public abstract boolean update(T obj);
+   public abstract void update(T obj);
    
-   public abstract boolean delete (T obj);
+   public abstract void delete (T obj);
    
 }
