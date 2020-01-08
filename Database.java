@@ -7,14 +7,17 @@ package codecp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ *
+ * @author Amal
+ */
 public class Database {
-    
     public final static String username = "root";
     public final static String password = "";
     public final static String DRIVER="com.mysql.jdbc.Driver";
@@ -24,18 +27,25 @@ public class Database {
     public static Statement st;
     public static ResultSet rs;
     
-    public Database(){} // cstr par defaut
+    public Database() {
+        try {
+            Class.forName(DRIVER);
+               con = DriverManager.getConnection(URL, username, password);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    } // cstr par defaut
     
     //cnx avec bd
-    public static void connect() throws ClassNotFoundException, SQLException{
-        Class.forName(DRIVER);
-        con = DriverManager.getConnection(URL, username, password);
-    }
+  
     
     //select
     public static ResultSet query(String q){
         try {
-            connect();
+            
             st = con.createStatement();
             rs = st.executeQuery(q);
         } 
@@ -47,18 +57,17 @@ public class Database {
     }
     
     //insert, update, delete
-    public static int dmlQuery(String q){
+   
+     public static int dmlQuery(PreparedStatement P){
         try {
-            connect();
-            st = con.createStatement();
-            return st.executeUpdate(q);
+          
+            return P.executeUpdate();
         } 
         catch (Exception ex) {
             System.out.println("Error");
         }
         return 0;
     }
-    
     
     
 }
