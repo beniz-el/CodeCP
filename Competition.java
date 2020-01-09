@@ -4,44 +4,28 @@
  * and open the template in the editor.
  */
 package codecp;
-
 import java.util.Date;
 
-
+/**
+ *
+ * @author Amal
+ */
 public class Competition {
     String Id_Competition;
     String Level_Comp;
     boolean Statut;
     Date Date_debut;
     Date Date_fin;
-    
-    public Competition(){
-        
-    }
-    
-    public void AddProbleme(){
-        
-    }
-    public void deleteProbleme(){
-        
-    }
-    public void AffcherListeProbleme(){
-        
-    }
-    public void AddUser(){
-        
-    }
-    public void DeleteUser(){
-        
-    }
-    public void showUser(){
-        
-    }
-    
-   public int CalculerLevel(){
-       return 0;
-   }
 
+    public Competition(String Id_Competition, String Level_Comp, boolean Statut, Date Date_debut, Date Date_fin) {
+        this.Id_Competition = Id_Competition;
+        this.Level_Comp = Level_Comp;
+        this.Statut = Statut;
+        this.Date_debut = Date_debut;
+        this.Date_fin = Date_fin;
+    }
+    
+  
     public String getIdCompetition() {
         return Id_Competition;
     }
@@ -77,5 +61,4 @@ public class Competition {
     public void setDatefin(Date Date_fin) {
         this.Date_fin = Date_fin;
     }
-    
 }
