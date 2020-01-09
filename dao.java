@@ -4,25 +4,25 @@
  * and open the template in the editor.
  */
 package codecp;
-
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.Vector;
 
-
-
-
-public abstract class dao<T> {
-
+/**
+ *
+ * @author Amal
+ */
+public abstract class DAO<T> {
    protected Database db;
    
-   public abstract T find(String id); //Rechercher
+   public abstract ResultSet find(String id); //Rechercher
    
-   public abstract Vector<User> all(); //recuperer tout
+   public abstract ResultSet all(); //recuperer tout
    
-   public abstract void create(T obj);
+   public abstract boolean create(T obj);
    
-   public abstract void update(T obj);
+   public abstract boolean update(T obj , String id);
    
-   public abstract void delete (T obj);
-   
+   public abstract boolean delete (String id);
+    
 }
