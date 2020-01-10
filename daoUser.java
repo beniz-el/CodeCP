@@ -5,137 +5,101 @@
  */
 package codecp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Amal
  */
-public class daoUser extends DAO<User>{
-    Database db;
-     public daoUser(Database db){
-         this.db = db;
+public class User {
+    static int id =0;
+    String Id_User;
+    String Username;
+    String Mdp;
+    String Email;
+    String Tel=null;
+    String Photo=null;
+    String Nom=null;
+    String Prenom=null;
+    String Langage=null;
+    
+     public User(String User, String password, String email){
+       Integer i = ++id;
+       Id_User = "U"+i.toString();
+       Username = User;
+       Mdp = password;
+       Email = email;
+   }
+   public User(String User, String password, String nom, String pre, String tel, String email, String lang, String image){
+       Integer i = ++id;
+       Id_User = "U"+i.toString();
+       Username = User;
+       Mdp = password;
+       Nom = nom;
+       Prenom = pre;
+       Tel = tel;
+       Email = email;
+       Langage = lang;
+       Photo = image;
+   }
+
+    public String getPhoto(){
+        return Photo;
+    }
+    public void setPhoto(String image){
+        Photo = image;
     }
     
-    public boolean create(User u){
-           boolean rs = false;
-        try {
-            PreparedStatement Pst;
-            Pst = db.con.prepareStatement( "INSERT INTO codecp.User VALUES(?,?,?,?,?,?,?,?,?)");
-            Pst.setString(1, u.getIdUser());
-            Pst.setString(2, u.getUsername());
-            Pst.setString(3, u.getMdp());
-            Pst.setString(4, u.getEmail());
-            Pst.setString(5, "");
-            Pst.setString(6, "");
-            Pst.setString(7, "");
-            Pst.setString(8, ""); 
-            Pst.setString(9, "");
-            
-            if(db.dmlQuery(Pst) == 1){
-                rs=true;
-            }
-            
-        } catch (SQLException ex) {
-            System.out.println("error insert user");
-        }
-        return rs;
+      
+    public String getMdp(){
+        return Mdp;
+    }
+    public void setMdp(String mdp){
+        Mdp = mdp;
+    }
+    public String getEmail(){
+        return Email;
+    }
+    public void setEmail(String mail){
+        Email = mail;
+    }
+    public String getTel(){
+        return Tel;
+    }
+    public void setTel(String tele){
+        Tel = tele;
+    }
+    public String getNom(){
+        return Nom;
+    }
+    public void setNom(String name){
+        Nom = name;
+    }
+    public String getPrenom(){
+        return Prenom;
+    }
+    public void setPrenom(String pre){
+        Prenom = pre;
+    }
+    public String getLangage(){
+        return Langage;
+    }
+    public void setLangage(String lang){
+        Langage = lang;
+    }
+    public String getUsername(){
+        return Username;
+    }
+     public void setUsername(String user){
+        Username = user;
     }
     
-    //ajouter ou modifier infos
-    public boolean update(User u, String Id){
-        boolean rs = false;
-        try {
-            PreparedStatement Pst;
-            Pst = db.con.prepareStatement("UPDATE codecp.user set Username = ?, Mdp = ? , E_Mail=? , Tel=? , Photo = ? ,Nom =? ,  Prenom =? , Language=? WHERE codecp.user.Id_User=? ;");
-            Pst.setString(1, u.getUsername());
-            Pst.setString(2, u.getMdp());
-            Pst.setString(3, u.getNom());
-            Pst.setString(4, u.getPrenom());
-            Pst.setString(5, u.getLangage());
-            Pst.setString(6, u.getTel());
-            Pst.setString(7, u.getEmail());
-            Pst.setString(8, u.getPhoto());
-            Pst.setString(9, Id);
-            
-           if(db.dmlQuery(Pst) == 1){
-               rs=true;
-           }
-        } catch (SQLException ex) {
-            System.out.println("error update user");
-        }
+    public String getIdUser(){
+        return Id_User;
+    }
+    
    
-       return rs;
-                           
-    }
+
     
-    //supprimer
-    public boolean delete(String id){
-        boolean rs = false;
-        String sql = "DELETE FROM codecp.User WHERE Id_User=?";
-        try {
-            PreparedStatement stmt = db.con.prepareStatement(sql);
-            stmt.setString(1, id);
-            stmt.executeUpdate();
-            rs = true;
-        } catch (SQLException ex) {
-            System.out.println("error delete user");
-        }
-        
-        return rs;
-    }
     
-    //lister
-    public ResultSet all(){
-           ResultSet Rs =null ;
-        String req;
-            req = "select * from codecp.User;";
-            Statement St;
-             try {
-                 St=db.con.createStatement();
-                 Rs= St.executeQuery(req);
-//            while(Rs.next()){
-//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"+Rs.getString(4)+"---->"
-//                        +Rs.getString(5)+"---->"+Rs.getString(6)+"---->"+Rs.getString(7)+"---->"+Rs.getString(8));
-//            }
-        
-        } catch (SQLException ex) {
-            System.out.println("PB dans la requete select user");
-        }
-      return Rs;
-
-          
-    }
-
-    @Override
-    public ResultSet find(String id) {
-        ResultSet Rs = null;
-        String sql = "Select * FROM codecp.User WHERE Id_User='"+ id+"';";
-        Statement St;
-             try {
-                 St=db.con.createStatement();
-                 Rs= St.executeQuery(sql);
-//            while(Rs.next()){
-//                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-//                        +Rs.getString("Prenom")+"---->"+Rs.getString("Langage")+"---->"+Rs.getString("E_mail")+"---->"+Rs.getString("Tel"));
-//            }
-        
-        } catch (SQLException ex) {
-            System.out.println("PB dans la requete find user");
-        }
-      return Rs;
-
-    }
+ 
+    
 }
