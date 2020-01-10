@@ -6,6 +6,7 @@
 package codecp;
 
 public class User {
+    static int id =0;
     int Id_User;
     String Username;
     String Mdp;
@@ -16,13 +17,23 @@ public class User {
     String Prenom;
     String Langage;
     
-   
+   public User(String User, String password, String nom, String pre, String tel, String email, String lang, String image){
+         Id_User = ++id;
+       Username = User;
+       Mdp = password;
+       Nom = nom;
+       Prenom = pre;
+       Tel = tel;
+       Email = email;
+       Langage = lang;
+       Photo = image;
+   }
 
     public String getPhoto(){
         return Photo;
     }
-    public void setPhoto(){
-        
+    public void setPhoto(String image){
+        Photo = image;
     }
     
       
