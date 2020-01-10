@@ -10,18 +10,30 @@ package codecp;
  * @author Amal
  */
 public class probleme {
+    static Integer id =0;
     String Id_Probleme;
     String Id_Solution;
     String DescriptionPb;
     String Level;
     String Titre;
+    String Test;
 
-    public probleme(String Id_Probleme, String Id_Solution, String DescriptionPb, String Level, String Titre) {
-        this.Id_Probleme = Id_Probleme;
+    public probleme(String Id_Solution, String DescriptionPb, String Level, String Titre , String Test) {
+        id++;
+        this.Id_Probleme = "P"+id.toString();
         this.Id_Solution = Id_Solution;
         this.DescriptionPb = DescriptionPb;
         this.Level = Level;
         this.Titre = Titre;
+        this.Test = Test;
+    }
+
+    public String getTest() {
+        return Test;
+    }
+
+    public void setTest(String Test) {
+        this.Test = Test;
     }
 
     public String getId_Solution() {
