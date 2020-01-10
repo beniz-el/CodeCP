@@ -14,6 +14,7 @@ public class Competition {
     String Id_Competition;
     String Level_Comp;
     boolean Statut;
+    String Titre;
     Date Date_debut;
     Date Date_fin;
 
