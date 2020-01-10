@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Amal
  */
 public class Competition {
+    static Integer id =0;
     String Id_Competition;
     String Level_Comp;
     boolean Statut;
@@ -18,8 +19,9 @@ public class Competition {
     Date Date_debut;
     Date Date_fin;
 
-    public Competition(String Id_Competition, String Level_Comp, boolean Statut, Date Date_debut, Date Date_fin) {
-        this.Id_Competition = Id_Competition;
+    public Competition( String Level_Comp, boolean Statut, Date Date_debut, Date Date_fin) {
+        id++;
+        this.Id_Competition = "C"+id.toString();
         this.Level_Comp = Level_Comp;
         this.Statut = Statut;
         this.Date_debut = Date_debut;
