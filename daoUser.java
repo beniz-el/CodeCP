@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,6 +5,13 @@
  */
 package codecp;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,11 +27,11 @@ public class daoUser extends dao<User> {
     }
     
     public boolean create(User u){
-          boolean rs = false;
+           boolean rs = false;
         try {
             PreparedStatement Pst;
             Pst = db.con.prepareStatement( "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)");
-            Pst.setInt(1, u.getIdUser());
+            Pst.setString(1, u.getIdUser());
             Pst.setString(2, u.getUsername());
             Pst.setString(3, u.getMdp());
             Pst.setString(4, "");
@@ -59,7 +65,7 @@ public class daoUser extends dao<User> {
             Pst.setString(6, u.getTel());
             Pst.setString(7, u.getEmail());
             Pst.setString(8, u.getPhoto());
-            Pst.setInt(9, Integer.parseInt(Id));
+            Pst.setString(9, Id);
             
            if(db.dmlQuery(Pst) == 1){
                rs=true;
@@ -78,7 +84,7 @@ public class daoUser extends dao<User> {
         String sql = "DELETE FROM User WHERE Id_User=?";
         try {
             PreparedStatement stmt = db.con.prepareStatement(sql);
-            stmt.setInt(1, Integer.parseInt(id));
+            stmt.setString(1, id);
             stmt.executeUpdate();
             rs = true;
         } catch (SQLException ex) {
@@ -109,8 +115,7 @@ public class daoUser extends dao<User> {
 
           
     }
-     
-    //find
+
     @Override
     public ResultSet find(String id) {
         ResultSet Rs = null;
