@@ -22,33 +22,30 @@ import java.util.logging.Logger;
 
 
 public class daoUser extends dao<User> {
-    public daoUser(){
-        Database db = new Database();
+     Database db;
+    public daoUser(Database db){
+         this.db = db;
     }
     
     public boolean create(User u){
-           boolean rs = false;
+           
+            PreparedStatement Pst = null;
         try {
-            PreparedStatement Pst;
             Pst = db.con.prepareStatement( "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?)");
-            Pst.setString(1, u.getIdUser());
-            Pst.setString(2, u.getUsername());
-            Pst.setString(3, u.getMdp());
-            Pst.setString(4, u.getEmail());
-            Pst.setString(5, "");
-            Pst.setString(6, "");
-            Pst.setString(7, "");
-            Pst.setString(8, ""); 
-            Pst.setString(9, "");
-            
-            if(db.dmlQuery(Pst) == 1){
-                rs=true;
-            }
-            
+            Pst.setObject(1, u.getIdUser());
+            Pst.setObject(2, u.getUsername());
+            Pst.setObject(3, u.getMdp());
+            Pst.setObject(4, u.getEmail());
+            Pst.setObject(5, "");
+            Pst.setObject(6, "");
+            Pst.setObject(8, ""); 
+            Pst.setObject(9, "");
+            System.out.println("hello");
+          
         } catch (SQLException ex) {
             Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return rs;
+         return (db.dmlQuery(Pst) == 0) ? false : true;  
     }
     
     //ajouter ou modifier infos
@@ -56,7 +53,7 @@ public class daoUser extends dao<User> {
         boolean rs = false;
         try {
             PreparedStatement Pst;
-            Pst = db.con.prepareStatement("UPDATE User set Username = ?, Mdp = ?, Nom =?, Prenom =? , Langage=?, Tel=?, E_mail=? , Photo = ? WHERE Id_User=?");
+            Pst = db.con.prepareStatement("UPDATE User set Username = ?, Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? WHERE Id_User=?");
             Pst.setString(1, u.getUsername());
             Pst.setString(2, u.getMdp());
             Pst.setString(3, u.getNom());
@@ -105,7 +102,7 @@ public class daoUser extends dao<User> {
                  Rs= St.executeQuery(req);
             while(Rs.next()){
                 System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Langage")+"---->"+Rs.getString("E_mail")+"---->"+Rs.getString("Tel"));
+                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel"));
             }
         
         } catch (SQLException ex) {
@@ -126,7 +123,7 @@ public class daoUser extends dao<User> {
                  Rs= St.executeQuery(sql);
             while(Rs.next()){
                 System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Langage")+"---->"+Rs.getString("E_mail")+"---->"+Rs.getString("Tel"));
+                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel"));
             }
         
         } catch (SQLException ex) {
