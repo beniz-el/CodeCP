@@ -5,17 +5,21 @@
  */
 package codecp;
 
+/**
+ *
+ * @author Amal
+ */
 public class User {
     static int id =0;
     String Id_User;
     String Username;
     String Mdp;
     String Email;
-    String Tel;
-    String Photo;
-    String Nom;
-    String Prenom;
-    String Langage;
+    String Tel=null;
+    String Photo=null;
+    String Nom=null;
+    String Prenom=null;
+    String Langage=null;
     
      public User(String User, String password, String email){
        Integer i = ++id;
@@ -92,5 +96,10 @@ public class User {
         return Id_User;
     }
     
+   
+
+    
+    
  
+    
 }
