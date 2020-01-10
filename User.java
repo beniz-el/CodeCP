@@ -7,7 +7,7 @@ package codecp;
 
 public class User {
     static int id =0;
-    int Id_User;
+    String Id_User;
     String Username;
     String Mdp;
     String Email;
@@ -18,7 +18,8 @@ public class User {
     String Langage;
     
    public User(String User, String password, String nom, String pre, String tel, String email, String lang, String image){
-         Id_User = ++id;
+       Integer i = ++id;
+       Id_User = "U"+i.toString();
        Username = User;
        Mdp = password;
        Nom = nom;
@@ -80,7 +81,7 @@ public class User {
         Username = user;
     }
     
-    public int getIdUser(){
+    public String getIdUser(){
         return Id_User;
     }
     
