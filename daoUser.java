@@ -34,7 +34,7 @@ public class daoUser extends dao<User> {
             Pst.setString(1, u.getIdUser());
             Pst.setString(2, u.getUsername());
             Pst.setString(3, u.getMdp());
-            Pst.setString(4, "");
+            Pst.setString(4, u.getEmail());
             Pst.setString(5, "");
             Pst.setString(6, "");
             Pst.setString(7, "");
