@@ -17,6 +17,13 @@ public class User {
     String Prenom;
     String Langage;
     
+     public User(String User, String password, String email){
+       Integer i = ++id;
+       Id_User = "U"+i.toString();
+       Username = User;
+       Mdp = password;
+       Email = email;
+   }
    public User(String User, String password, String nom, String pre, String tel, String email, String lang, String image){
        Integer i = ++id;
        Id_User = "U"+i.toString();
