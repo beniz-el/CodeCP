@@ -19,33 +19,39 @@ import java.sql.Statement;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
-public class daoUser extends dao<User> {
-     Database db;
-    public daoUser(Database db){
+/**
+ *
+ * @author Amal
+ */
+public class daoUser extends DAO<User>{
+    Database db;
+     public daoUser(Database db){
          this.db = db;
     }
     
     public boolean create(User u){
-           
-            PreparedStatement Pst = null;
+           boolean rs = false;
         try {
-            Pst = db.con.prepareStatement( "INSERT INTO User VALUES(?,?,?,?,?,?,?,?,?);");
-            Pst.setObject(1, u.getIdUser());
-            Pst.setObject(2, u.getUsername());
-            Pst.setObject(3, u.getMdp());
-            Pst.setObject(4, u.getEmail());
-            Pst.setObject(5, "");
-            Pst.setObject(6, "");
-            Pst.setObject(8, ""); 
-            Pst.setObject(9, "");
-            System.out.println("hello");
-          
+            PreparedStatement Pst;
+            Pst = db.con.prepareStatement( "INSERT INTO codecp.User VALUES(?,?,?,?,?,?,?,?,?)");
+            Pst.setString(1, u.getIdUser());
+            Pst.setString(2, u.getUsername());
+            Pst.setString(3, u.getMdp());
+            Pst.setString(4, u.getEmail());
+            Pst.setString(5, "");
+            Pst.setString(6, "");
+            Pst.setString(7, "");
+            Pst.setString(8, ""); 
+            Pst.setString(9, "");
+            
+            if(db.dmlQuery(Pst) == 1){
+                rs=true;
+            }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error insert user");
         }
-         return (db.dmlQuery(Pst) == 0) ? false : true;  
+        return rs;
     }
     
     //ajouter ou modifier infos
@@ -53,7 +59,7 @@ public class daoUser extends dao<User> {
         boolean rs = false;
         try {
             PreparedStatement Pst;
-            Pst = db.con.prepareStatement("UPDATE User set Username = ?, Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? WHERE Id_User=?;");
+            Pst = db.con.prepareStatement("UPDATE codecp.user set Username = ?, Mdp = ? , E_Mail=? , Tel=? , Photo = ? ,Nom =? ,  Prenom =? , Language=? WHERE codecp.user.Id_User=? ;");
             Pst.setString(1, u.getUsername());
             Pst.setString(2, u.getMdp());
             Pst.setString(3, u.getNom());
@@ -68,7 +74,7 @@ public class daoUser extends dao<User> {
                rs=true;
            }
         } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error update user");
         }
    
        return rs;
@@ -78,14 +84,14 @@ public class daoUser extends dao<User> {
     //supprimer
     public boolean delete(String id){
         boolean rs = false;
-        String sql = "DELETE FROM User WHERE Id_User=?;";
+        String sql = "DELETE FROM codecp.User WHERE Id_User=?";
         try {
             PreparedStatement stmt = db.con.prepareStatement(sql);
             stmt.setString(1, id);
             stmt.executeUpdate();
             rs = true;
         } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error delete user");
         }
         
         return rs;
@@ -95,18 +101,18 @@ public class daoUser extends dao<User> {
     public ResultSet all(){
            ResultSet Rs =null ;
         String req;
-            req = "select * from User;";
+            req = "select * from codecp.User;";
             Statement St;
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(req);
-            while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel"));
-            }
+//            while(Rs.next()){
+//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"+Rs.getString(4)+"---->"
+//                        +Rs.getString(5)+"---->"+Rs.getString(6)+"---->"+Rs.getString(7)+"---->"+Rs.getString(8));
+//            }
         
         } catch (SQLException ex) {
-            System.out.println("PB dans la requete select");
+            System.out.println("PB dans la requete select user");
         }
       return Rs;
 
@@ -116,25 +122,20 @@ public class daoUser extends dao<User> {
     @Override
     public ResultSet find(String id) {
         ResultSet Rs = null;
-        String sql = "Select * FROM User WHERE Id_User="+ id+";";
+        String sql = "Select * FROM codecp.User WHERE Id_User='"+ id+"';";
         Statement St;
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(sql);
-            while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel"));
-            }
+//            while(Rs.next()){
+//                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
+//                        +Rs.getString("Prenom")+"---->"+Rs.getString("Langage")+"---->"+Rs.getString("E_mail")+"---->"+Rs.getString("Tel"));
+//            }
         
         } catch (SQLException ex) {
-            System.out.println("PB dans la requete select");
+            System.out.println("PB dans la requete find user");
         }
       return Rs;
 
     }
-
-
-
-    
-
 }
