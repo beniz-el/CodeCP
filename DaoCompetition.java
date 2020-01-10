@@ -31,9 +31,9 @@ public class DaoCompetition extends DAO<Competition>{
             PS = db.con.prepareStatement("select * from codecp.competition where Id_Competition=?;");
             PS.setObject(1,id); 
             Rs= PS.executeQuery();
-            while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
-            }
+//            while(Rs.next()){
+//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
+//            }
         } catch (SQLException ex) {
             System.out.println("error find");
         }
@@ -49,9 +49,9 @@ public class DaoCompetition extends DAO<Competition>{
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(req);
-            while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
-            }
+//            while(Rs.next()){
+//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
+//            }
         
         } catch (SQLException ex) {
             System.out.println("PB dans la requete select");
@@ -63,12 +63,13 @@ public class DaoCompetition extends DAO<Competition>{
     public boolean create(Competition obj) {
            PreparedStatement PS=null;
         try {
-            PS = db.con.prepareStatement("INSERT INTO codecp.competition VALUES (?,?,?,?,?);");
+            PS = db.con.prepareStatement("INSERT INTO codecp.competition VALUES (?,?,?,?,?,?);");
             PS.setObject(1,obj.getIdCompetition()); 
             PS.setObject(2,obj.getLevelComp()); 
             PS.setObject(3,obj.getStatut()); 
             PS.setObject(4,obj.getDatedebut()); 
             PS.setObject(5,obj.getDatefin()); 
+            PS.setObject(6,obj.getTitre()); 
         } catch (SQLException ex) {
             System.out.println("error create");
         }
@@ -81,13 +82,14 @@ public class DaoCompetition extends DAO<Competition>{
     public boolean update(Competition obj , String id) {
         PreparedStatement PS=null;
         try {
-            PS = db.con.prepareStatement("UPDATE codecp.competition SET Level_Comp = ?, Statut = ?, Date_debut = ?, Date_fin = ? WHERE codecp.competition.Id_Competition = ?;");
+            PS = db.con.prepareStatement("UPDATE codecp.competition SET Level_Comp = ?, Statut = ?, Date_debut = ?, Date_fin = ? , Titre = ? WHERE codecp.competition.Id_Competition = ?;");
            
             PS.setObject(1,obj.getLevelComp()); 
             PS.setObject(2,obj.getStatut()); 
             PS.setObject(3,obj.getDatedebut()); 
             PS.setObject(4,obj.getDatefin()); 
-             PS.setObject(5,id); 
+            PS.setObject(5,obj.getTitre()); 
+             PS.setObject(6,id); 
         } catch (SQLException ex) {
             System.out.println("error update");
         }

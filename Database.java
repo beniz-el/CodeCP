@@ -50,21 +50,31 @@ public class Database {
             rs = st.executeQuery(q);
         } 
         catch (Exception ex) {
-            System.out.println("Error");
+            System.out.println("Error query");
   
         }
         return rs;
     }
     
     //insert, update, delete
-   
+    public static int dmlQuery(String q){
+        try {
+          
+            st = con.createStatement();
+            return st.executeUpdate(q);
+        } 
+        catch (Exception ex) {
+            System.out.println("Error execute st");
+        }
+        return 0;
+    }
      public static int dmlQuery(PreparedStatement P){
         try {
           
             return P.executeUpdate();
         } 
         catch (Exception ex) {
-            System.out.println("Error");
+            System.out.println("Error prepared statement");
         }
         return 0;
     }

@@ -62,4 +62,13 @@ public class Competition {
     public void setDatefin(Date Date_fin) {
         this.Date_fin = Date_fin;
     }
+
+    public String getTitre() {
+        return Titre;
+    }
+
+    public void setTitre(String Titre) {
+        this.Titre = Titre;
+    }
+    
 }
