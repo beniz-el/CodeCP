@@ -17,8 +17,8 @@ public class Message {
     boolean Lu;
     
     public Message(String id1, String id2, String cont, boolean lu){
-         Integer i = ++Id;
-       Id_Msg = "M"+i.toString();
+         ++Id;
+       Id_Msg = "M"+String.valueOf(Id);
        Id_User_emet = id1;
        Id_User_recept = id2;
        Contenu = cont;
