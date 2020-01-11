@@ -24,14 +24,14 @@ public class daoMessage extends dao<Message>{
     public ResultSet all() {
        ResultSet Rs =null ;
         String req;
-            req = "select * from Message";
+            req = "select * from Message;";
             Statement St;
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(req);
             while(Rs.next()){
-                System.out.println(Rs.getString("Id_Msg")+"---->"+Rs.getString("Id_User_emet")+"---->"+Rs.getString("Id_User_recept")+"---->"
-                        +Rs.getString("Contenu")+"---->"+Rs.getObject("Date")+"---->"+Rs.getObject("Lu"));
+                System.out.println(Rs.getString("emet")+"---->"+Rs.getString("recep")+"---->"+Rs.getString("ID_Msg")+"---->"
+                        +Rs.getString("Contenu")+"---->"+Rs.getDate("Date")+"---->"+Rs.getBoolean("Lu"));
             }
         
         } catch (SQLException ex) {
@@ -46,10 +46,10 @@ public class daoMessage extends dao<Message>{
         Date date = new Date();
         try {
             PreparedStatement Pst;
-            Pst = db.con.prepareStatement( "INSERT INTO Message VALUES(?,?,?,?,?,?)");
-            Pst.setObject(1, M.getIdMsg());
+            Pst = db.con.prepareStatement( "INSERT INTO Message VALUES(?,?,?,?,?,?);");
+            Pst.setObject(1, M.getIdUserrecept());
             Pst.setObject(2, M.getIdUseremet());
-            Pst.setObject(3, M.getIdUserrecept());
+            Pst.setObject(3, M.getIdMsg());
             Pst.setObject(4, M.getContenu());
             Pst.setObject(5, date);
             Pst.setObject(6, M.getLu());
@@ -69,7 +69,7 @@ public class daoMessage extends dao<Message>{
     @Override
     public boolean delete(String id) {
            boolean rs = false;
-        String sql = "DELETE FROM Message WHERE Id_Msg=?";
+        String sql = "DELETE FROM Message WHERE Id_Msg=?;";
         try {
             PreparedStatement stmt = db.con.prepareStatement(sql);
             stmt.setString(1, id);
@@ -97,7 +97,7 @@ public class daoMessage extends dao<Message>{
             Rs= PS.executeQuery();
         
             while(Rs.next()){
-                  System.out.println(Rs.getString("Id_Msg")+"---->"+Rs.getString("Id_User_emet")+"---->"+Rs.getString("Id_User_recept")+"---->"
+                  System.out.println(Rs.getString("emet")+"---->"+Rs.getString("recep")+"---->"+Rs.getString("Id_Msg")+"---->"
                         +Rs.getString("Contenu")+"---->"+Rs.getObject("Date")+"---->"+Rs.getObject("Lu"));
                  
             }
