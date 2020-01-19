@@ -6,24 +6,26 @@
 package codecp;
 
 
-public class Admin {
+public class Admin extends Personne{
     String login;
     String password;
     
-    public Admin(){
-        
-    }
-    
-    public void EnvoyerGmail(){
-        
-    }
-    
-    public void EnvoyerMesgClarification(){
-        
+    public Admin(String log, String pass){
+        super("Admin");
+        login = log;
+        password=pass;
     }
     
     public String getLogin(){
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getUsername() {
+        return Username;
     }
     public String getMdp(){
         return password;
