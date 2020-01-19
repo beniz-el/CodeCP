@@ -39,7 +39,7 @@ public class daoAdmin extends daoPersonne{
                rs=true;
            }
         } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(daoAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
    
        return rs;
