@@ -5,41 +5,41 @@
  */
 package codecp;
 
-/**
- *
- * @author Amal
- */
-public class User {
+import java.util.Date;
+
+public class User extends Personne{
     static int id =0;
-    String Id_User;
-    String Username;
     String Mdp;
-    String Email;
-    String Tel=null;
-    String Photo=null;
-    String Nom=null;
-    String Prenom=null;
-    String Langage=null;
+    String E_Mail;
+    String Tel;
+    String Photo;
+    String Nom;
+    String Prenom;
+    String Language;
+    Date Date_Inscription ;
+    boolean Actif ;
+    int Seuil;
+    String path ;
     
-     public User(String User, String password, String email){
-       Integer i = ++id;
-       Id_User = "U"+i.toString();
-       Username = User;
+    public User(){}
+    
+     public User(String password, String email){
+        super();
        Mdp = password;
-       Email = email;
+       E_Mail = email;
+       Date_Inscription = new Date();
    }
-   public User(String User, String password, String nom, String pre, String tel, String email, String lang, String image){
-       Integer i = ++id;
-       Id_User = "U"+i.toString();
-       Username = User;
+   public User(String password, String nom, String pre, String tel, String email, String lang, String image){
+       super();
        Mdp = password;
        Nom = nom;
        Prenom = pre;
        Tel = tel;
-       Email = email;
-       Langage = lang;
+       E_Mail = email;
+       Language = lang;
        Photo = image;
    }
+   
 
     public String getPhoto(){
         return Photo;
@@ -56,10 +56,35 @@ public class User {
         Mdp = mdp;
     }
     public String getEmail(){
-        return Email;
+        return E_Mail;
     }
     public void setEmail(String mail){
-        Email = mail;
+        E_Mail = mail;
+    }
+
+    public Date getDate_Inscription() {
+        return Date_Inscription;
+    }
+    public void setDate_Inscription(Date date) {
+        Date_Inscription = date;
+    }
+
+    public boolean getActif() {
+        return Actif;
+    }
+    public void setActif(boolean act) {
+        Actif = act;
+    }
+
+    public int getSeuil() {
+        return Seuil;
+    }
+    public void setSeuil(int seuil) {
+        this.Seuil = seuil;
+    }
+
+    public String getPath() {
+        return path;
     }
     public String getTel(){
         return Tel;
@@ -80,10 +105,10 @@ public class User {
         Prenom = pre;
     }
     public String getLangage(){
-        return Langage;
+        return Language;
     }
     public void setLangage(String lang){
-        Langage = lang;
+        Language = lang;
     }
     public String getUsername(){
         return Username;
@@ -91,15 +116,10 @@ public class User {
      public void setUsername(String user){
         Username = user;
     }
-    
-    public String getIdUser(){
-        return Id_User;
+   
+    public void setPath(String path) {
+        this.path = path;
     }
     
-   
-
-    
-    
  
-    
 }
