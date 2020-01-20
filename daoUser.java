@@ -43,8 +43,8 @@ public class daoUser extends daoPersonne {
             Pst.setObject(7, ""); 
             Pst.setObject(8, "");
             Pst.setObject(9, ((User)p).getDate_Inscription());
-            Pst.setObject(10, "");
-            Pst.setObject(11, "");
+            Pst.setBoolean(10, false);
+            Pst.setInt(11, 0);
             Pst.setObject(12, "");
           
         } catch (SQLException ex) {
