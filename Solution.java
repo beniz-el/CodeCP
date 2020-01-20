@@ -5,32 +5,46 @@
  */
 package codecp;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Solution {
-    int Id_Solution;
-    String Description;
+    String Id_Solution;
+    String path;
+    String Language;
     
-    public Solution(){
-        
+    public Solution(String path, String Lang){
+        Integer id = 0;
+        try {
+            id=daoSolution.getCount();
+        } catch (SQLException ex) {
+            Logger.getLogger(Solution.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.Id_Solution = "S"+id.toString();
+        this.path = path;
+        this.Language = Lang;
     }
-    public void AddSolution(){
-        
+
+    public void setPath(String path) {
+        this.path = path;
     }
-    public void SupprimerSolution(){
-        
+
+    public void setLanguage(String Language) {
+        this.Language = Language;
     }
-    public void ModifierSolution(){
-        
-    }
-    public void AfficherSolution(){
-        
-    }
-    public int getIdSolution(){
+   
+
+    public String getId_Solution() {
         return Id_Solution;
     }
-    public String getDescription(){
-        return Description;
+
+    public String getPath() {
+        return path;
     }
-    public void setDescription(String descrp){
-        Description = descrp;
+
+    public String getLanguage() {
+        return Language;
     }
+   
 }
