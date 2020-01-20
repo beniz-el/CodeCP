@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Amal
+ * @author Dream Info
  */
-public class DaoCompetition extends DAO<Competition>{
+public class DaoCompetition extends dao<Competition>{
     Database db ;
     public DaoCompetition(Database db){
         this.db = db;
@@ -31,9 +31,10 @@ public class DaoCompetition extends DAO<Competition>{
             PS = db.con.prepareStatement("select * from codecp.competition where Id_Competition=?;");
             PS.setObject(1,id); 
             Rs= PS.executeQuery();
-//            while(Rs.next()){
-//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
-//            }
+            while(Rs.next()){
+                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"+Rs.getString(4)
+                +"---->"+Rs.getString(5)+"---->"+Rs.getString(6));
+            }
         } catch (SQLException ex) {
             System.out.println("error find");
         }
@@ -49,9 +50,10 @@ public class DaoCompetition extends DAO<Competition>{
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(req);
-//            while(Rs.next()){
-//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
-//            }
+            while(Rs.next()){
+                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"+Rs.getString(4)
+                +"---->"+Rs.getString(5)+"---->"+Rs.getString(6));
+            }
         
         } catch (SQLException ex) {
             System.out.println("PB dans la requete select");
@@ -82,13 +84,13 @@ public class DaoCompetition extends DAO<Competition>{
     public boolean update(Competition obj , String id) {
         PreparedStatement PS=null;
         try {
-            PS = db.con.prepareStatement("UPDATE codecp.competition SET Level_Comp = ?, Statut = ?, Date_debut = ?, Date_fin = ? , Titre = ? WHERE codecp.competition.Id_Competition = ?;");
+            PS = db.con.prepareStatement("UPDATE codecp.competition SET Level_Comp = ?, Statut = ?, Date_debut = ?, Date_fin = ?, Titre = ? WHERE codecp.competition.Id_Competition = ?;");
            
             PS.setObject(1,obj.getLevelComp()); 
             PS.setObject(2,obj.getStatut()); 
             PS.setObject(3,obj.getDatedebut()); 
             PS.setObject(4,obj.getDatefin()); 
-            PS.setObject(5,obj.getTitre()); 
+            PS.setObject(5,obj.getTitre());
              PS.setObject(6,id); 
         } catch (SQLException ex) {
             System.out.println("error update");
@@ -111,18 +113,18 @@ public class DaoCompetition extends DAO<Competition>{
         
         return (db.dmlQuery(PS) == 0) ? false : true;  
     }
-    public boolean AddProbleme(String id , probleme p){
+    public boolean AddProbleme(String id , Probleme p){
         
         PreparedStatement PS=null;
         try {
             PS = db.con.prepareStatement("insert into codecp.compose values (? ,?);");
-            PS.setObject(1,id); 
-            PS.setObject(2,p.getIdProbleme()); 
+            PS.setObject(1,p.getIdProbleme());
+            PS.setObject(2,id); 
+             
         } catch (SQLException ex) {
             System.out.println("error create");
         }
-           
-        
+
         return (db.dmlQuery(PS) == 0) ? false : true;  
         
     }
@@ -148,9 +150,9 @@ public class DaoCompetition extends DAO<Competition>{
              try {
                  St=db.con.createStatement();
                  Rs= St.executeQuery(req);
-//            while(Rs.next()){
-//                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2));
-//            }
+            while(Rs.next()){
+                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
+            }
         
         } catch (SQLException ex) {
             System.out.println("PB dans la requete select");
@@ -159,6 +161,24 @@ public class DaoCompetition extends DAO<Competition>{
                         
                         
     }
+    
+    public static int getCount()throws SQLException{
+        Database db1 = new Database();
+        ResultSet Rs = null;
+        String req;
+        req= "select count(*) from codecp.competition;";
+        Statement St;
+        try{
+        St=db1.con.createStatement();
+        Rs=St.executeQuery(req);
+        }
+        catch(SQLException ex){
+            System.out.println("PB dans la requete select");
+        }
+        Rs.next();
+        return (Rs.getInt(1));
+    }
+    
     public boolean AddUser(String Id_User , String Id_Compt){
         
         PreparedStatement PS=null;
@@ -237,6 +257,160 @@ public class DaoCompetition extends DAO<Competition>{
         return "hard";
         
    }
-
-    
+   
+//   public ResultSet AffcherSubmissions(String id){
+//        
+//            String req;
+//            req = " select S.Id_Submit , S.Username , S.Id_Probleme from codecp.submit_in_comp S where S.Id_Competition ='"+id+"';";
+//            Statement St;
+//            ResultSet Rs=null;
+//             try {
+//                 St=db.con.createStatement();
+//                 Rs= St.executeQuery(req);
+////            while(Rs.next()){
+////                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3));
+////            }
+//        
+//        } catch (SQLException ex) {
+//            System.out.println("PB dans la requete select");
+//        }
+//        return Rs;
+//                        
+//                        
+//    }
+   
+   public static String AverageLevel(String id){
+       Database db1 = new Database();
+       Integer resultat=0;
+       String req;
+       int acc=0;
+       int tot=1;
+            req = " select count(S.Id_Submit) from codecp.submit_in_comp S where S.Id_Competition ='"+id+"';";
+            Statement St;
+            ResultSet Rs=null;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+                 
+                  while(Rs.next()){
+                 tot = Integer.parseInt(Rs.getString(1));
+                     // System.out.println(tot);
+            }
+         
+        } catch (SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+             
+       String sql = " select count(SC.Id_Submit) from codecp.submit_in_comp SC  where SC.verdict = 'accepted' and SC.Id_Competition ='"+id+"';";
+            Statement Smt;
+            ResultSet Res=null;
+             try {
+                 St=db1.con.createStatement();
+                 Res= St.executeQuery(sql);
+                 while(Res.next()){
+                 acc = Integer.parseInt(Res.getString(1));
+                 }
+        } 
+                 catch (SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+             if(tot!=0){
+         resultat = (acc*100)/tot;}
+         return resultat.toString();
+   }
+   public static int NbreParticipant(){
+       Database db1 = new Database();
+       String req;
+       int tot=0;
+       req = " select count(Username) from codecp.participe";
+            Statement St;
+            ResultSet Rs=null;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+                
+                  while(Rs.next()){
+                 tot = Integer.parseInt(Rs.getString(1));
+                     // System.out.println(tot);
+                    }
+            }
+              catch(SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+        return tot;   
+   }
+   
+   public static int NbreTotalCompetition(){
+       Database db1 = new Database();
+        String req;
+       int tot=0;
+       req = " select count(Id_Competition) from codecp.competition";
+            Statement St;
+            ResultSet Rs=null;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+                
+                  while(Rs.next()){
+                 tot = Integer.parseInt(Rs.getString(1));
+                      //System.out.println(tot);
+                    }
+            }
+              catch(SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+        return tot;
+   }
+   public static int NbreTotalParticipantInCompeti(String id){  
+       Database db1 = new Database();
+       String req;
+       int tot=0;
+       req = " select count(Username) from codecp.participe where Id_Competition ='"+id+"';";
+            Statement St;
+            ResultSet Rs=null;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+                
+                  while(Rs.next()){
+                 tot = Integer.parseInt(Rs.getString(1));
+                     // System.out.println(tot);
+                    }
+            }
+              catch(SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+        return tot;   
+   }
+   
+  
+   
+ public static boolean exist(String user, String competition){
+     Database db1 = new Database();
+     String req;
+       int tot=0;
+       req = " select count(Username) from codecp.participe where Username = '"+user+"' and Id_Competition ='"+competition+"';";
+            Statement St;
+            ResultSet Rs=null;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+                
+                  while(Rs.next()){
+                 tot = Integer.parseInt(Rs.getString(1));
+                     // System.out.println(tot);
+                    }
+            }
+              catch(SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }   
+       if(tot<=1){
+           return true;
+       }
+       else{
+           return false;
+       }
+   }
+ 
+ 
 }
