@@ -7,30 +7,19 @@ package codecp;
 
 import java.util.Date;
 
-public class Message {
-    static int Id=0;
-    String Id_Msg;
-    String Id_User_emet;
-    String Id_User_recept;
+public abstract class Message {
     String Contenu;
     Date date;
     boolean Lu;
+    String Objet;
     
-    public Message(String id1, String id2, String cont, boolean lu){
-         ++Id;
-       Id_Msg = "M"+String.valueOf(Id);
-       Id_User_emet = id1;
-       Id_User_recept = id2;
+    public Message(){
+    }
+    
+    public Message(String cont, String obj){
+       date = new Date();
        Contenu = cont;
-       Lu = lu;
-    }
-
-    public void setIdUseremet(String Id_User_emet) {
-        this.Id_User_emet = Id_User_emet;
-    }
-
-    public void setIdUserrecept(String Id_User_recept) {
-        this.Id_User_recept = Id_User_recept;
+       Objet = obj;
     }
 
     public void setContenu(String Contenu) {
@@ -44,19 +33,12 @@ public class Message {
     public void setLu(boolean Lu) {
         this.Lu = Lu;
     }
+
+    public void setObjet(String Objet) {
+        this.Objet = Objet;
+    }
+
    
-    public String getIdMsg() {
-        return Id_Msg;
-    }
-
-    public String getIdUseremet() {
-        return Id_User_emet;
-    }
-
-    public String getIdUserrecept() {
-        return Id_User_recept;
-    }
-
     public String getContenu() {
         return Contenu;
     }
@@ -68,6 +50,11 @@ public class Message {
     public boolean getLu() {
         return Lu;
     }
+
+    public String getObjet() {
+        return Objet;
+    }
+
     
     
 }
