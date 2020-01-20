@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package codecp;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,15 +122,15 @@ public class daoUser extends daoPersonne {
     public ResultSet all(){
            ResultSet Rs =null ;
         String req;
-            req = "select * from user;";
+            req = "select * from codecp.user;";
             Statement St;
              try {
                  St=getDb().con.createStatement();
                  Rs= St.executeQuery(req);
             while(Rs.next()){
-                System.out.println(Rs.getString(1)+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel")+"---->"+Rs.getString("Date_Inscription")
-                         +"---->"+Rs.getObject("Actif")+"---->"+Rs.getObject("Seuil")+"---->"+Rs.getString("path"));
+               // System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"
+                //        +Rs.getString(4)+"---->"+Rs.getString(5)+"---->"+Rs.getString(6)+"---->"+Rs.getString(7)+"---->"+Rs.getString(8)
+                 //        +"---->"+Rs.getObject(9)+"---->"+Rs.getObject(10)+"---->"+Rs.getString(11));
             }
         
         } catch (SQLException ex) {
@@ -142,15 +144,15 @@ public class daoUser extends daoPersonne {
     @Override
     public ResultSet find(String id) {
         ResultSet Rs = null;
-        String sql = "Select * FROM user WHERE Username="+ id+";";
+        String sql = "Select * FROM user WHERE Username='"+ id+"';";
         Statement St;
              try {
                  St=getDb().con.createStatement();
                  Rs= St.executeQuery(sql);
             while(Rs.next()){
-                  System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
-                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel")+"---->"+Rs.getString("Date_Inscription")
-                         +"---->"+Rs.getObject("Actif")+"---->"+Rs.getObject("Seuil")+"---->"+Rs.getString("path"));
+//                  System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
+//                        +Rs.getString("Prenom")+"---->"+Rs.getString("Language")+"---->"+Rs.getString("E_Mail")+"---->"+Rs.getString("Tel")+"---->"+Rs.getString("Date_Inscription")
+//                         +"---->"+Rs.getObject("Actif")+"---->"+Rs.getObject("Seuil")+"---->"+Rs.getString("path"));
             }
         
         } catch (SQLException ex) {
@@ -160,8 +162,40 @@ public class daoUser extends daoPersonne {
 
     }
 
-
-
+    public ResultSet getSubmiisions(String id){
+      ResultSet Rs = null;
+        String sql = "Select * FROM codecp.submit WHERE Username='"+ id+"';";
+        Statement St;
+             try {
+                 St=getDb().con.createStatement();
+                 Rs= St.executeQuery(sql);
+            while(Rs.next()){
+//                  System.out.println(Rs.getString(1)+"---->"+Rs.getString(2));
+            }
+        
+        } catch (SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+      return Rs;
+ }
+    
+    public ResultSet getTTactif(){
+        ResultSet Rs = null;
+        String sql = "Select * FROM codecp.user WHERE Actif=1;";
+        Statement St;
+             try {
+                 St=getDb().con.createStatement();
+                 Rs= St.executeQuery(sql);
+            while(Rs.next()){
+//                  System.out.println(Rs.getString(1)+"---->"+Rs.getString(2));
+            }
+        
+        } catch (SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+      return Rs;
+    }
+   
     
 
 }
