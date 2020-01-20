@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codecp;
+
 
 import java.util.Date;
 
 public class User extends Personne{
-    static int id =0;
+  
     String Mdp;
     String E_Mail;
     String Tel;
@@ -110,12 +110,7 @@ public class User extends Personne{
     public void setLangage(String lang){
         Language = lang;
     }
-    public String getUsername(){
-        return Username;
-    }
-     public void setUsername(String user){
-        Username = user;
-    }
+   
    
     public void setPath(String path) {
         this.path = path;
