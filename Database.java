@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codecp;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,19 +21,17 @@ public class Database {
     public final static String username = "root";
     public final static String password = "";
     public final static String DRIVER="com.mysql.jdbc.Driver";
-    public final static String URL = "jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull";
+    public final static String URL = "jdbc:mysql://localhost:3306/mysql";
     
     public static Connection con;
     public static Statement st;
     public static ResultSet rs;
     
-    public Database() {
+    public  Database() {
         try {
             Class.forName(DRIVER);
                con = DriverManager.getConnection(URL, username, password);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
      
