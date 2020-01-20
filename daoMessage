@@ -5,108 +5,39 @@
  */
 package codecp;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class daoMessage extends dao<Message>{
 
-   Database db;
-   public daoMessage(Database db){
-       this.db = db;
-   }
+public class daoMessage extends dao<Message> {
+        Database db;
+     
+    public daoMessage(Database db){
+         this.db = db;
+    }
+
+    @Override
+    public ResultSet find(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public ResultSet all() {
-       ResultSet Rs =null ;
-        String req;
-            req = "select * from Message;";
-            Statement St;
-             try {
-                 St=db.con.createStatement();
-                 Rs= St.executeQuery(req);
-            while(Rs.next()){
-                System.out.println(Rs.getString("emet")+"---->"+Rs.getString("recep")+"---->"+Rs.getString("ID_Msg")+"---->"
-                        +Rs.getString("Contenu")+"---->"+Rs.getDate("Date")+"---->"+Rs.getBoolean("Lu"));
-            }
-        
-        } catch (SQLException ex) {
-            System.out.println("PB dans la requete select");
-        }
-      return Rs;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean create(Message M) {
-        boolean rs = false;
-        Date date = new Date();
-        try {
-            PreparedStatement Pst;
-            Pst = db.con.prepareStatement( "INSERT INTO Message VALUES(?,?,?,?,?,?);");
-            Pst.setObject(1, M.getIdUserrecept());
-            Pst.setObject(2, M.getIdUseremet());
-            Pst.setObject(3, M.getIdMsg());
-            Pst.setObject(4, M.getContenu());
-            Pst.setObject(5, date);
-            Pst.setObject(6, M.getLu());
-            
-            if(db.dmlQuery(Pst) == 1){
-                rs=true;
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
+    public boolean create(Message obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
 
     @Override
-    public boolean delete(String id) {
-           boolean rs = false;
-        String sql = "DELETE FROM Message WHERE Id_Msg=?;";
-        try {
-            PreparedStatement stmt = db.con.prepareStatement(sql);
-            stmt.setString(1, id);
-            stmt.executeUpdate();
-            rs = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return rs;
-    }
-    
-     @Override
     public boolean update(Message obj, String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-     @Override
-    public ResultSet find(String id) {
-         PreparedStatement PS=null;
-         ResultSet Rs=null;
-        try {
-            PS = db.con.prepareStatement("select * from Message where Id_Msg=?;");
-            PS.setObject(1,id); 
-            Rs= PS.executeQuery();
-        
-            while(Rs.next()){
-                  System.out.println(Rs.getString("emet")+"---->"+Rs.getString("recep")+"---->"+Rs.getString("Id_Msg")+"---->"
-                        +Rs.getString("Contenu")+"---->"+Rs.getObject("Date")+"---->"+Rs.getObject("Lu"));
-                 
-            }
-        
-        } catch (SQLException ex) {
-            System.out.println("PB dans la requete select");
-        }
-      return Rs;
 
+    @Override
+    public boolean delete(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
