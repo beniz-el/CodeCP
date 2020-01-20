@@ -3,38 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codecp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class daoUser extends daoPersonne {
-     Database db;
+   
+ 
     public daoUser(Database db){
-         this.db = db;
+         super(db);
     }
    
     
-    public boolean create(Personne p){
-           
-            PreparedStatement Pst = null;
-           super.create(p);
+    public boolean create(Personne p){ 
+        PreparedStatement Pst = null;
+        super.create((Personne)p);
         try {   
-            Pst = db.con.prepareStatement( "INSERT INTO user VALUES(?,?,?,?,?,?,?,?,?,?,?,?);");
-            Pst.setObject(1, ((User)p).getUsername());
+            Pst = getDb().con.prepareStatement("INSERT INTO codecp.user VALUES(?,?,?,?,?,?,?,?,?,?,?,?);");
+            System.out.println((p).getUsername());
+            Pst.setObject(1, (p).getUsername());
             Pst.setObject(2, ((User)p).getMdp());
             Pst.setObject(3, ((User)p).getEmail());
             Pst.setObject(4, "");
@@ -50,7 +42,7 @@ public class daoUser extends daoPersonne {
         } catch (SQLException ex) {
             Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return (db.dmlQuery(Pst) == 0) ? false : true;  
+         return (getDb().dmlQuery(Pst) == 0) ? false : true;  
     }
     
     //ajouter ou modifier infos
@@ -59,7 +51,7 @@ public class daoUser extends daoPersonne {
         super.update(p, Id);
         try {
             PreparedStatement Pst;
-            Pst = db.con.prepareStatement("UPDATE user set Username = ?, Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
+            Pst = getDb().con.prepareStatement("UPDATE user set Username = ?, Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
             Pst.setString(1, ((User)p).getUsername());
             Pst.setString(2, ((User)p).getMdp());
             Pst.setString(3, ((User)p).getNom());
@@ -85,7 +77,7 @@ public class daoUser extends daoPersonne {
         boolean rs = false;
         try {
             PreparedStatement Pst;
-            Pst = db.con.prepareStatement("UPDATE user set Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
+            Pst = getDb().con.prepareStatement("UPDATE user set Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
             
             Pst.setString(1, ((User)p).getMdp());
             Pst.setString(2, ((User)p).getNom());
@@ -113,7 +105,7 @@ public class daoUser extends daoPersonne {
         super.delete(id);
         String sql = "DELETE FROM user WHERE Username=?;";
         try {
-            PreparedStatement stmt = db.con.prepareStatement(sql);
+            PreparedStatement stmt = getDb().con.prepareStatement(sql);
             stmt.setString(1, id);
             stmt.executeUpdate();
             rs = true;
@@ -131,7 +123,7 @@ public class daoUser extends daoPersonne {
             req = "select * from user;";
             Statement St;
              try {
-                 St=db.con.createStatement();
+                 St=getDb().con.createStatement();
                  Rs= St.executeQuery(req);
             while(Rs.next()){
                 System.out.println(Rs.getString(1)+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
@@ -153,7 +145,7 @@ public class daoUser extends daoPersonne {
         String sql = "Select * FROM user WHERE Username="+ id+";";
         Statement St;
              try {
-                 St=db.con.createStatement();
+                 St=getDb().con.createStatement();
                  Rs= St.executeQuery(sql);
             while(Rs.next()){
                   System.out.println(Rs.getString(1)+"---->"+Rs.getString("Username")+"---->"+Rs.getString("Mdp")+"---->"+Rs.getString("Nom")+"---->"
