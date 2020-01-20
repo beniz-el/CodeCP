@@ -4,28 +4,46 @@
  * and open the template in the editor.
  */
 package codecp;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Amal
+ * @author Dream Info
  */
 public class Competition {
-    static Integer id =0;
     String Id_Competition;
     String Level_Comp;
     boolean Statut;
-    String Titre;
     Date Date_debut;
     Date Date_fin;
+    String Titre;
 
-    public Competition( String Level_Comp, boolean Statut, Date Date_debut, Date Date_fin) {
-        id++;
-        this.Id_Competition = "C"+id.toString();
+    public Competition(String Level_Comp, boolean Statut, String titre) {
+         Integer id=0;
+        
+        try {
+            id=DaoCompetition.getCount();
+        } catch (SQLException ex) {
+            Logger.getLogger(Competition.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+         this.Id_Competition = "C"+id.toString();
         this.Level_Comp = Level_Comp;
         this.Statut = Statut;
-        this.Date_debut = Date_debut;
-        this.Date_fin = Date_fin;
+        this.Date_debut = new Date();
+        this.Date_fin = new Date();
+        this.Titre = titre;
+    }
+
+    public void setTitre(String Titre) {
+        this.Titre = Titre;
+    }
+
+    public String getTitre() {
+        return Titre;
     }
     
   
@@ -64,13 +82,4 @@ public class Competition {
     public void setDatefin(Date Date_fin) {
         this.Date_fin = Date_fin;
     }
-
-    public String getTitre() {
-        return Titre;
-    }
-
-    public void setTitre(String Titre) {
-        this.Titre = Titre;
-    }
-    
 }
