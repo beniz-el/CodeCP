@@ -11,17 +11,17 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Dream Info
+ * @author Amal
  */
 public class Competition {
     String Id_Competition;
-    String Level_Comp;
+    Level Level_Comp;
     boolean Statut;
     Date Date_debut;
     Date Date_fin;
     String Titre;
 
-    public Competition(String Level_Comp, boolean Statut, String titre) {
+    public Competition(Level Level_Comp, boolean Statut, String titre) {
          Integer id=0;
         
         try {
@@ -51,7 +51,7 @@ public class Competition {
         return Id_Competition;
     }
 
-    public String getLevelComp() {
+    public Level getLevelComp() {
         return Level_Comp;
     }
 
@@ -67,7 +67,7 @@ public class Competition {
         return Date_fin;
     }
 
-    public void setLevelComp(String Level_Comp) {
+    public void setLevelComp(Level Level_Comp) {
         this.Level_Comp = Level_Comp;
     }
 
