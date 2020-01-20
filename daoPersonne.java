@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package codecp;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,11 @@ public class daoPersonne extends dao<Personne> {
     public daoPersonne(Database db){
          this.db = db;
     }
-    
+
+    public Database getDb() {
+        return db;
+    }
+
 
     @Override
     public ResultSet find(String id) {
@@ -63,15 +67,13 @@ public class daoPersonne extends dao<Personne> {
     @Override
     public boolean create(Personne p) {
        PreparedStatement Pst = null;
-        try {
-            Pst = db.con.prepareStatement( "INSERT INTO Personne VALUES(?);");
-            Pst.setObject(1, p.getUsername());
-           
-          
-        } catch (SQLException ex) {
-            Logger.getLogger(daoPersonne.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         return (db.dmlQuery(Pst) == 0) ? false : true;  
+          try {
+              Pst = db.con.prepareStatement("INSERT INTO codecp.personne VALUES(?);");
+              Pst.setObject(1, p.getUsername());
+          } catch (SQLException ex) {
+              Logger.getLogger(daoPersonne.class.getName()).log(Level.SEVERE, null, ex);
+          }
+       return (db.dmlQuery(Pst) == 0) ? false : true;  
     }
 
     @Override
@@ -108,6 +110,26 @@ public class daoPersonne extends dao<Personne> {
         }
         
         return rs;
+    }
+    
+    
+    
+        public static int getCount() throws SQLException{
+        Database db1 = new Database();
+        ResultSet Rs =null ;
+        String req;
+            req = "select count(*) from codecp.personne;";
+            Statement St;
+             try {
+                 St=db1.con.createStatement();
+                 Rs= St.executeQuery(req);
+        
+        } catch (SQLException ex) {
+            System.out.println("PB dans la requete select");
+        }
+         Rs.next();
+            return (Rs.getInt(1));
+        
     }
     
 }
