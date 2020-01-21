@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,27 +51,62 @@ public class daoUser extends daoPersonne {
     //ajouter ou modifier infos
     public boolean update(Personne p, String Id){
         boolean rs = false;
+        System.out.println("hello");
+        
+        int exist=0;
+        String user = p.getUsername();
+        System.out.println(user);
+       ResultSet Rs = null;
+        String sql = "SELECT count(Username) FROM codecp.user WHERE Username='"+user+"';";
+        Statement St;
+             try {
+                 St=getDb().con.createStatement();
+                 Rs= St.executeQuery(sql);
+            while(Rs.next()){
+                 exist = Integer.parseInt(Rs.getString(1));
+            }
+        
+        } catch (SQLException ex) {
+            System.out.println("PB dans la requete count");
+        }
+             System.out.println(exist);
+        if(exist >= 1){
+            System.out.println("Username existe deja, choisissez un autre:\n");
+            Scanner MyUser = new Scanner(System.in);  
+            System.out.println(user+"1\n");
+            System.out.println(user+"2\n");
+            System.out.println(user+"3\n");
+            String userName = MyUser.nextLine(); 
+            p.setUsername(userName);
+//            System.out.println(userName);
+//            System.out.println(p.getUsername());
+            System.out.println("hi"+((User)p).getMdp());
+            this.update(p, Id);
+            System.out.println("bye");
+        }
+        else{
+            System.out.println("hnaaaa");
         super.update(p, Id);
         try {
             PreparedStatement Pst;
-            Pst = getDb().con.prepareStatement("UPDATE user set Username = ?, Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
+            Pst = getDb().con.prepareStatement("UPDATE codecp.user set Username = ?, Mdp = ?,E_Mail=?, Tel=?, Photo = ? ,Nom =?, Prenom =? , Language=?   WHERE Username=?;");
             Pst.setString(1, ((User)p).getUsername());
             Pst.setString(2, ((User)p).getMdp());
+             Pst.setString(7, ((User)p).getEmail());
+             Pst.setString(6, ((User)p).getTel());
+             Pst.setString(8, ((User)p).getPhoto());
             Pst.setString(3, ((User)p).getNom());
             Pst.setString(4, ((User)p).getPrenom());
-            Pst.setString(5, ((User)p).getLangage());
-            Pst.setString(6, ((User)p).getTel());
-            Pst.setString(7, ((User)p).getEmail());
-            Pst.setString(8, ((User)p).getPhoto());
+            Pst.setString(5, ((User)p).getLangage()); 
             Pst.setString(9, Id);
             
-           if(db.dmlQuery(Pst) == 1){
+           if(getDb().dmlQuery(Pst) == 1){
                rs=true;
            }
         } catch (SQLException ex) {
             Logger.getLogger(daoUser.class.getName()).log(Level.SEVERE, null, ex);
         }
-   
+        }
        return rs;
                            
     }
@@ -79,7 +115,7 @@ public class daoUser extends daoPersonne {
         boolean rs = false;
         try {
             PreparedStatement Pst;
-            Pst = getDb().con.prepareStatement("UPDATE user set Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
+            Pst = getDb().con.prepareStatement("UPDATE codecp.user set Mdp = ?, Nom =?, Prenom =? , Language=?, Tel=?, E_Mail=? , Photo = ? , WHERE Username=?;");
             
             Pst.setString(1, ((User)p).getMdp());
             Pst.setString(2, ((User)p).getNom());
@@ -128,9 +164,9 @@ public class daoUser extends daoPersonne {
                  St=getDb().con.createStatement();
                  Rs= St.executeQuery(req);
             while(Rs.next()){
-               // System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"
-                //        +Rs.getString(4)+"---->"+Rs.getString(5)+"---->"+Rs.getString(6)+"---->"+Rs.getString(7)+"---->"+Rs.getString(8)
-                 //        +"---->"+Rs.getObject(9)+"---->"+Rs.getObject(10)+"---->"+Rs.getString(11));
+                System.out.println(Rs.getString(1)+"---->"+Rs.getString(2)+"---->"+Rs.getString(3)+"---->"
+                        +Rs.getString(4)+"---->"+Rs.getString(5)+"---->"+Rs.getString(6)+"---->"+Rs.getString(7)+"---->"+Rs.getString(8)
+                         +"---->"+Rs.getObject(9)+"---->"+Rs.getObject(10)+"---->"+Rs.getString(11));
             }
         
         } catch (SQLException ex) {
